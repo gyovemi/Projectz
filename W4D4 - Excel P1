@@ -1,0 +1,100 @@
+W4D4
+
+“COMUNI D’ITALIA”
+Il file Elenco-comuni-italiani è stato scaricato dal web ed è di tipo OPEN DATA. 
+E’ composto da due fogli: il primo contenente i dati di tutti i comuni d’Italia 
+                          ed il secondo, LEGENDA, con la spiegazioni dei campi della tabella COMUNI.
+
+1 Identidicare i Metadati, i campi chiave e il tipo di licenza.
+2 Data Prep Foglio “COMUNI”:
+  1 Identificare i campi utili all'analisi e rimuovere i superflui
+  2 Eliminare i Duplicati non utili
+  3 Nominare ed eventualmente rinominare i Campi
+  4 Formattare i Campi
+  5 Pulizia dei campi
+  6 Unione dei campi (Codice Provincia e Codice Comune) con separatore "-"
+  7 Dividere il campo (Codice Catastale) nelle sue componeti alfabetiche e numeriche
+  8 Estrarre le ultime 3 cifre del campo (Codice Comune) in un nuovo campo (Estrazione)
+  9 Ordinamento per Area Geografica
+3A Data Analysis su Foglio "Riepilogo":
+  1 Creazione Campo Lista con Comuni
+  1 Creazione Campo Calcolato per SOMMA aggregativa di POPOLAZIONE
+  2 Creazione Campo Calcolato per MEDIA aggregativa di POPOLAZIONE
+  3 Creazione Campo Calcolato per MINIMO aggregativo di POPOLAZIONE
+  4 Creazione Campo Calcolato per MASSIMO aggregativo di POPOLAZIONE
+  5 Indicare Comuni con la seguente Caratteristica: POPOLAZIONE > 800000
+  5 Indicare Comuni con la seguente Caratteristica: LIKE 'B%'
+3B Data Analysis su Foglio "Comuni":
+  1 Applicare Formattazione Condizionale (Colore Grigio) su campi con Caratteristica: '%NAP%'
+  2 Applicare Formattazione Condizionale (BARRE DI DATI BLU) sul campo (POPOLAZIONE)
+
+W4D4 file link:
+>>> https://drive.google.com/file/d/14OtLVvmyWt_zoYOZ6_pDrit0ALHsDTFw/view?usp=sharing <<<
+
+Log Tecnico:
+            Prima delle operazioni viene convertite le celle dell'intervallo $A$1:$O$7955 
+            (le colonne aggiunte successivamente vengono incluse automaticamente).
+            
+            Eliminare colonne/righe vuote o non utili all’analisi
+            Nominata F1 = Regione.
+            Unione valori colonne G e H con la formula (=CONCAT(SE(G2="-"; ""; G2); SE(H2="-"; "";H2))) 
+            per eliminare i valori - indipendentemente dalla loro posizione nelle celle e ottenere i valori nel formato conforme; 
+            eliminazione colonna vuota (H)
+            
+            Verificare la presenza di record DUPLICATI ed eventualmente eliminarli.
+            Verifica effettuata tramite l'analisi dei duplicati con la funzione omonima nella sezione Dati 
+            e con la verifica sulle colonne C,D,E, tramite formattazione condizionale 
+            > Regole evidenziazione celle > Valori duplicati;
+            Non sono stati rilevati duplicati.
+            
+            Nominare tutti i campi
+            Gia' effettuato.
+            
+            Impostare il formato NUMERO al campo POPOLAZIONE con separatore delle migliaia
+            Selezione celle colonna K e selezione formato Numero nella barra degli strumenti.
+            Scrivere in MAIUSCOLO tutte le REGIONI
+            Utilizzo della formula = Maiusc; selezione celle della colonna G; copia e incolla valori nella colonna G.
+            Verificare ed eliminare eventuali SPAZI nella colonna AREA GEOGRAFICA
+            Utilizzo della funzione trova e sostituisci nella colonna F indicando nella ricerca " " 
+            e nel sostituisci "" (le virgolette servono per esplicare gli spazi).
+            Unire in una sola colonna dal nome COD le colonne CODICE PROVINCIA 
+            e CODICE COMUNE separate dal simbolo meno “ – “
+            Utilizzo della formula =CONCAT(celle colonna B;"-";celle colonna C;).
+            Ordinare la tabella per AREA GEOGRAFICA
+            Utilizzo della funzione ordina dalla A alla Z tramite barra degli strumenti o tramite l'elenco dei filtri nell'intestazione della tabella
+            Spezzare il contenuto della colonna CODICE CATASTALE in due colonne dal nome COD CAT e COD CAT2 (in una la lettera e nell’altra le cifre)
+            utilizzo della funzione Testo in colonne > Larghezza fissa > primo valore > fine > riordinamento valori nelle nuove colonne COD CAT e COD CAT2.
+            In una nuova colonna dal nome ESTRAZIONE, estrarre le ultime 3 cifre dal campo CODICE COMUNE
+            Uso formula =destra(valore celle colonna c;3)
+            
+            Dare a tutte le colonne un NOME (Casella del Nome)
+            Gia' effettuato.
+
+            In un nuovo foglio dal nome RIEPILOGO, calcolare SOMMA, MEDIA, MIN E MAX di POPOLAZIONE 
+            (disporre e formattare i dati a vostro piacimento, considerando che state creando un REPORT leggibile da chiunque); 
+            indicare quanti COMUNI hanno più di 800.000 abitanti. Indicare quanti comuni iniziano con la lettera B.
+            vedere foglio riepilogo
+
+            Nel foglio COMUNI, tramite la Formattazione Condizionale, colorare di GRIGIO solo i COMUNI che contengono la stringa “NAP”
+            Utilizzo funzione della barra degli strumenti Formattazione Condizionale > Nuova Regola 
+            > Formatta solo le celle che contengono > inizia con > NAP > selezione colore grigio > ok; operazione effettuata sulla colonna E
+            Applicare la  FORMATTAZIONE CONDIZIONALE BARRE DEI DATI Blu alla colonna POPOLAZIONE.
+            Utilizzo funzione della barra degli strumenti Formattazione Condizionale > Barre dei Dati Blu sulla colonna K
+
+            Secondo il Dataset (foglio COMUNI) fornito e le richieste esplicate di elaborazione della sommatoria, 
+            media, massimo e minimo valore sui dati della colonna "Popolazione" ($K$2:$K$7955 o [@Popolazione]):
+            Risulta una sommatoria di 59.433.744 persone,(effettuata con la formula "=SOMMA(COMUNI!$K$2:$K$7955)")
+            una media di 7472 persone,
+            (effettuata con la formula "=MEDIA(COMUNI!$K$2:$K$7955)")
+            un valore minimo di 30 persone per il comune di Pedesina (Sondrio)
+            (effettuata con la formula "=MIN(COMUNI!$K$2:$K$7955)")
+            e un valore massimo di 2.617.175 per il comune di Roma (Roma)
+            (effettuata con la formula "=MAX(COMUNI!$K$2:$K$7955)");
+            
+            Invece per l'elaborazione riguardo ai comuni rispetto ai valori di popolazione e di nomenclatura:
+            Risultano solamente 4 comuni che superano il CAP di 800.000 abitanti/persone,
+            ovvero:  Roma, Milano, Torino, Napol;
+            effettuato con formula =CONTA.SE(COMUNI!K2:COMUNI!K7955;">800000")
+            e 577 Comuni hanno il nome che inizia per la stringa "B" (indicati a lato).
+            effettuato con formula =CONTA.SE(COMUNI!E2:COMUNI!E7955;"B*")
+
