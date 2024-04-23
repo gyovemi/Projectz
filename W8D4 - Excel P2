@@ -1,0 +1,100 @@
+W8D4
+
+STRUTTURE RICETTIVE DELLA REGIONE MARCHE
+La regione Marche chiede di sviluppare un sistema per la gestione delle strutture ricettive del territorio. 
+
+Abbiamo a disposizione due file:
+elencostrutture.xlsx contenente l’elenco di tutte le informazioni sulle strutture (categoria, nome, indirizzo, ecc.)
+prezzimedi.csv contenente l’elenco dei prezzi medi delle strutture per città
+
+All’interno del file ELENCOSTRUTTURE, riempire le informazioni (celle azzurre) 
+nella maschera del foglio RICERCA inserendo un menù a tendina nella cella C3 (cella gialla) per inserire il NOME STRUTTURA. 
+Nelle celle colore GRIGIO inserire il numero totale delle strutture della regione 
+e il numero di strutture presenti nella città della STRUTTURA CERCATA.
+
+Creare in un nuovo foglio dal nome PIVOT una tabella pivot 
+per mostrare il numero di strutture per CATEGORIA filtrabile per CITTA’
+
+Aprire un nuovo file Excel dal nome MODELLO DATI.xlsx.
+Caricare la tabella presente nel foglio STRUTTURE RICETTIVE del file ELENCOSTRUTTURE 
+e applicare, dove necessario, le trasformazioni tramite POWER QUERY (eventuali righe vuote, spazi, maiuscole/minuscole, ecc.). 
+Inserire la tabella nel modello tramite POWERPIVOT.
+Caricare la tabella presente nel foglio PREZZI del file PREZZIMEDI. 
+Trasformare/Preparare i dati tramite POWERQUERY. 
+Inserire la tabella nel modello tramite POWERPIVOT.
+Creare la relazione tra le due tabelle
+Caricare il lavoro in piattaforma zippando tutti i file in un file ESERCIZIO.ZIP
+
+W8D4 file link
+>>> https://drive.google.com/file/d/1vxKIrpGMWZYrYersdKdx1jrA-IzNHkFR/view?usp=sharing <<<
+
+Log Tecnico:
+
+            LOG TECNICO
+            Dal materiale fornito si è evidenziata una varia incongruenza sui dati specificatamente a quelli che rientrano nei termini di "indirizzo internet" e "indirizzo di posta elettronica" che sono stati riscontrati sia nelle omonime colonne sia indiririzzati correttamente che invertiti (tra indirizzo internet e di posta elettronica) sia come dati sparsi in altre colonne (Localita).
+            Primi passaggi
+            A)
+            Creare una tabella tramite Ctrl+A e Ctrl+T
+            B)
+            Risoluzione dell' incongruenza tramite la formula ad hoc:
+            -1
+            =IF(ISNUMBER(FIND("@";"Cella in cui identificare il carattere ricercato"))=TRUE;"Cella in cui identificare il carattere ricercato";" ")
+            per identificare univocamente i record che sono e-mail (applicato nelle colonne Indirizzo Internet e Indirizzo di posta elettronica)
+            -2
+            =IF(NOT(ISNUMBER(FIND("@";"Cella in cui identificare il carattere ricercato")))=TRUE);"Cella in cui identificare il carattere ricercato";" ")
+            per identificare univocamente i record che sono i siti internet (applicato nelle colonne Indirizzo Internet e Indirizzo di posta elettronica)
+            -3
+            =CONCAT per creare una colonna di elaborazione (Column 1 e 2, poi eliminate) per raggruppare l'e-mail e i siti internet nelle nuove colonne ("Siti Internet" e "Indirizzi mail")
+            Ricerca
+            Si crea il menù a tendina tramite Data/Data Validation/List/Indicare come fonte dati "Denominazione"
+            
+            I dati per cui si vuole sapere un dettaglio vengono indicati tramite formula cerca.vert
+            (valore da cercare, ovvero la denominazione della struttura per cui cercare dettagli; la matrice di dati o tabella da cui attingere tali dettagli; valore numerio che indica da quale colonna, ordinata da 1 a n, andare a prendere i dettagli cercati; criterio di ricerca assoluto o lasso).
+            Per sapere invece il numero di strutture presenti nel foglio elenco strutture si utilizza CONTA.VALORI(Denominazione)
+            Se invece si vuole sapere il numero di Strutture in dipendenza di un altro parametro, quali Localita o Citta, si utilizza SOMMA.SE(Range in cui contare; Criterio per cui contare) 
+            La tabella PIVOT
+            Per creare la tabella Pivot seguendo le richieste fornite:
+            Si seleziona la tabella da cui derivare la PIVOT tramite il tasto dedicato nella sezione insersci.
+            Successivamente si inserisce Categoria nelle Righe, Denominazione in Valori (da contare per Categoria) e in Filtri Citta.
+            
+            Si crea il file Modello (varie modalità dal desktop o da Excel stesso)
+            Per elaborare dati presenti in elenco strutture e prezzi
+            Si va nella sezione Dati e poi Get data/From File/Excel Workbook
+            Power Query
+            In Power query si provvede alla pulizia dei dati tramite l'eliminazione delle prime righe (4), rimozione della colonna vuota e impostazione della prima riga come Header e valore valuta per la colonna prezzi (per il foglio prezzi).
+            Invece per il foglio elenco strutture si esegue un trim per tutte le colonne (selezione tramite shift+click/tasto destro sull' intestazione di una colonna/trasform/trim) e UpperCase quasi tutte le colonne tranne per le mail e gli indirizzi internet.
+            Per queste colonne appena citata si esegue un operazione alternata di trim e replace value per popolare intano gli spazi vuoti con "null" e poi sostituirli con "N/A".
+            Caricamento in nuovi fogli di calcolo e inserimento tramite flag nel opzione apposita del riquadro del caricamento dell'elaborato delle query.
+            Power Pivot
+            Da Power Pivot selezionare vista a diagramma e collegare "CITTA'" di prezzi a "CITTA'" di elenco strutture (1:n).
+            
+            LOG TECNICO
+            
+            Dal materiale fornito si è evidenziata una varia incongruenza nei dati, in particolare per quanto riguarda i termini "indirizzo internet" e "indirizzo di posta elettronica". Tali incongruenze sono state riscontrate sia nelle colonne omonime, sia correttamente inserite che invertite (tra indirizzo internet e indirizzo di posta elettronica), sia come dati sparsi in altre colonne (Località).
+            
+            **Primi passaggi**
+            A) Creare una tabella tramite Ctrl+A e Ctrl+T
+            B) Risoluzione dell'incongruenza tramite la formula ad hoc:
+            
+            - 1 `=IF(ISNUMBER(FIND("@"; "Cella in cui identificare il carattere ricercato"))=TRUE; "Cella in cui identificare il carattere ricercato"; " ")` per identificare univocamente i record che sono e-mail (applicato nelle colonne Indirizzo Internet e Indirizzo di posta elettronica)
+            - 2 `=IF(NOT(ISNUMBER(FIND("@"; "Cella in cui identificare il carattere ricercato")))=TRUE; "Cella in cui identificare il carattere ricercato"; " ")` per identificare univocamente i record che sono siti internet (applicato nelle colonne Indirizzo Internet e Indirizzo di posta elettronica)
+            - 3 `=CONCAT` per creare una colonna di elaborazione (Column 1 e 2, poi eliminate) per raggruppare l'e-mail e i siti internet nelle nuove colonne ("Siti Internet" e "Indirizzi mail")
+            
+            **Ricerca**
+            Si crea il menù a tendina tramite Data/Data Validation/List/Indicare come fonte dati "Denominazione".
+            I dati per cui si vuole sapere un dettaglio vengono indicati tramite formula cerca.vert (valore da cercare, ovvero la denominazione della struttura per cui cercare dettagli; la matrice di dati o tabella da cui attingere tali dettagli; valore numerico che indica da quale colonna, ordinata da 1 a n, andare a prendere i dettagli cercati; criterio di ricerca assoluto o lasso).
+            Per sapere invece il numero di strutture presenti nel foglio elenco strutture si utilizza CONTA.VALORI(Denominazione). Se invece si vuole sapere il numero di Strutture in dipendenza di un altro parametro, quali Località o Città, si utilizza SOMMA.SE(Range in cui contare; Criterio per cui contare).
+            
+            **La tabella PIVOT**
+            Per creare la tabella Pivot seguendo le richieste fornite:
+            Si seleziona la tabella da cui derivare la PIVOT tramite il tasto dedicato nella sezione Inserisci. Successivamente si inserisce "Categoria" nelle Righe, "Denominazione" in Valori (da contare per Categoria) e in Filtri "Città".
+            
+            **Creazione del file Modello**
+            Per elaborare dati presenti in elenco strutture e prezzi, si va nella sezione Dati e poi Get data/From File/Excel Workbook.
+            
+            **Power Query**
+            In Power Query, si procede alla pulizia dei dati tramite l'eliminazione delle prime 4 righe, la rimozione della colonna vuota e l'impostazione della prima riga come Header, con il valore valuta per la colonna prezzi (per il foglio prezzi). Per il foglio elenco strutture, si esegue un trim per tutte le colonne (selezione tramite shift+click/tasto destro sull'intestazione di una colonna/trasform/trim) e Uppercase quasi tutte le colonne tranne per le mail e gli indirizzi internet.
+            Per queste colonne appena citate, si esegue un'operazione alternata di trim e replace value per popolare intanto gli spazi vuoti con "null" e poi sostituirli con "N/A". Caricamento in nuovi fogli di calcolo e inserimento tramite flag nell'opzione apposita del riquadro del caricamento dell'elaborato delle query.
+            
+            **Power Pivot**
+            Da Power Pivot, selezionare vista a diagramma e collegare "CITTA'" di prezzi a "CITTA'" di elenco strutture (1:n).
