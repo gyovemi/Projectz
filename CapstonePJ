@@ -1,0 +1,19 @@
+Capstone Project
+
+Denormalizzazione DB sample World Wide Importers OLTP tramite Viste, 
+successivamente utilizzate per popolare tramite Stored Procedure la struttura DWH creata ad hoc.
+Caricamento DWH su PowerBi per creare una Dashboard su Vendite ed Acquisti.
+
+Soggetto:
+
+Wide World Importers (WWI) è un importatore e distributore all'ingrosso di articoli di novità che opera nell'area della baia di San Francisco.
+In qualità di grossista, i clienti della Prima Guerra Mondiale sono principalmente aziende che rivendono a privati. 
+La WWI vende a clienti al dettaglio negli Stati Uniti, inclusi negozi specializzati, supermercati, negozi di informatica, negozi di attrazioni turistiche e alcuni privati. 
+
+WWI vende anche ad altri grossisti tramite una rete di agenti che promuovono i prodotti per conto di WWI. 
+Sebbene tutti i clienti di WWI abbiano attualmente sede negli Stati Uniti, la società intende spingere per l'espansione in altri paesi/regioni.
+
+La WWI acquista beni da fornitori tra cui produttori di novità e giocattoli e altri grossisti di novità. 
+Conservano la merce nel magazzino di WWI e la riordinano dai fornitori secondo necessità per soddisfare gli ordini dei clienti. 
+Acquistano anche grandi volumi di materiali da imballaggio e li vendono in quantità minori per comodità dei clienti.
+
